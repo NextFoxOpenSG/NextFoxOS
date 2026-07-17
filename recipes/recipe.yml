@@ -36,6 +36,3 @@ modules:
   - type: script
     snippets:
       - personalizar.sh
-
-  # 5. Firma digital de la imagen para instalaciones seguras
-  - type: signing
