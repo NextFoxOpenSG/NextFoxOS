@@ -28,7 +28,7 @@ modules:
         - net.pcsx2.PCSX2
         - org.ppsspp.PPSSPP
 
-  # 2. Registrar tu script de personalización desde su ruta real
+  # 2. Registrar tu script de personalización (BlueBuild ya sabe que está en files/scripts)
   - type: script
     scripts:
-      - ../files/scripts/personalizar.sh
+      - personalizar.sh
