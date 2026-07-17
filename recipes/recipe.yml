@@ -3,7 +3,7 @@ name: nextfoxos
 description: Sistema operativo personalizado basado en Fedora con herramientas para desarrollo y gaming.
 
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 40
+image-version: 44
 
 modules:
   # 1. Aplicaciones Flatpak por defecto (formato compatible con el esquema)
