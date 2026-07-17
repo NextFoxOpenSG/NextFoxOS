@@ -1,45 +1,39 @@
----
-# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
-name: template
-# description will be included in the image's metadata
-description: This is my personal OS image.
+# recipes/recipe.yml
+name: nextfoxos
+description: Custom operating system based on Fedora Atomic. Focused on gamers who want to play without many background processes.
 
-# the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 42 # latest is also supported if you want new updates ASAP
+# Elegimos la base del sistema. "kinoite" (KDE Plasma) es extremadamente
+# configurable y ligero, ideal para flujos de trabajo de desarrollo.
+base-image: ghcr.io/ublue-os/kinoite-main
+image-version: 40 # O la versión estable más reciente de Fedora (e.g., 40, 41)
 
-# module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
+  # 1. Copiar archivos personalizados del repositorio al sistema (como configuraciones de apps)
   - type: files
-    files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
-  - type: dnf
-    repos:
-      copr:
-        - atim/starship
-    install:
-      packages:
-        - micro
-        - starship
-    remove:
-      packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+  # 2. Configurar los repositorios de paquetes de RPM Fusion (para drivers y códecs multimedia)
+  - type: rpm-fusion
 
-  - type: default-flatpaks
-    configurations:
-      - notify: true # Send notification after install/uninstall is finished (true/false)
-        scope: system
-        # If no repo information is specified, Flathub will be used by default
-        install: # system flatpaks we want all users to have and not remove
-          - org.mozilla.firefox
-          - org.gnome.Loupe
-      - scope: user # Also add Flathub user repo, but no user packages
+  # 3. Paquetes del sistema que se instalarán directamente en la imagen base (capa rpm-ostree)
+ - type: default-flatpaks
+    system:
+      # Navegador y Herramientas de Desarrollo
+      - com.brave.Browser
+      - com.visualstudio.code
+      - org.godotengine.Godot
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+      # Plataformas de Gaming y Launchers de PC
+      - com.valvesoftware.Steam               
+      - com.heroicgameslauncher.hgl
+      - net.lutris.Lutris
+      - org.prismlauncher.PrismLauncher       
+      
+      # Emulación y Herramientas Útiles
+      - org.duckstation.DuckStation           
+      - net.pcsx2.PCSX2
+      - org.ppsspp.PPSSPP
+  # 4. Paquetes nativos RPM esenciales que quieres que estén siempre disponibles en la terminal
+  - type: yafti
+    # (Opcional: un asistente visual para cuando el usuario inicie sesión por primera vez)
+
+  - type: signing # Firma digital de la imagen para instalaciones seguras
