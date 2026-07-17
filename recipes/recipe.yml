@@ -1,20 +1,18 @@
-# recipes/recipe.yml
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: nextfoxos
-description: Custom operating system based on Fedora Atomic. Focused on gamers who want to play without many background processes.
+description: Sistema operativo personalizado basado en Fedora con herramientas para desarrollo y gaming.
 
-# Base estable de Fedora Kinoite (KDE Plasma)
-base-image: ghcr.io/ublue-os/kinoite-main
+base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 40
 
 modules:
-  # 1. Copiar archivos personalizados del repositorio al sistema
+  # 1. Copiar archivos personalizados al sistema (opcional, dejamos estructura mínima)
   - type: files
 
-  # 2. Configurar los repositorios de paquetes de RPM Fusion (drivers y códecs)
-  - type: rpm-fusion
-
-  # 3. Aplicaciones Flatpak por defecto instaladas en el sistema
+  # 2. Aplicaciones Flatpak instaladas por defecto a nivel de sistema
   - type: default-flatpaks
+    configurations:
+      - org.flatpak.default-profile
     system:
       # Navegador y Herramientas de Desarrollo
       - com.brave.Browser
@@ -32,7 +30,7 @@ modules:
       - net.pcsx2.PCSX2
       - org.ppsspp.PPSSPP
 
-  # 4. Registrar tu script personalizado de la terminal
+  # 3. Registrar tu script personalizado de la terminal
   - type: script
     snippets:
       - personalizar.sh
