@@ -22,6 +22,7 @@ modules:
         - com.heroicgameslauncher.hgl
         - net.lutris.Lutris
         - org.prismlauncher.PrismLauncher       
+        - io.itch.itch
         
         # Emulación y Herramientas Útiles
         - org.duckstation.DuckStation           
