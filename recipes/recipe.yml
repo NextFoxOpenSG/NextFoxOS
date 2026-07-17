@@ -6,8 +6,8 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 44
 
 modules:
-  # 1. Aplicaciones Flatpak por defecto (formato compatible con el esquema)
-  - type: default-flatpaks
+  # 1. Aplicaciones Flatpak por defecto (forzando la v1 compatible)
+  - type: default-flatpaks@v1
     notify: true
     system:
       repo: flathub
