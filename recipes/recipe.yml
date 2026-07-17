@@ -2,20 +2,19 @@
 name: nextfoxos
 description: Custom operating system based on Fedora Atomic. Focused on gamers who want to play without many background processes.
 
-# Elegimos la base del sistema. "kinoite" (KDE Plasma) es extremadamente
-# configurable y ligero, ideal para flujos de trabajo de desarrollo.
+# Base estable de Fedora Kinoite (KDE Plasma)
 base-image: ghcr.io/ublue-os/kinoite-main
-image-version: 40 # O la versión estable más reciente de Fedora (e.g., 40, 41)
+image-version: 40
 
 modules:
-  # 1. Copiar archivos personalizados del repositorio al sistema (como configuraciones de apps)
+  # 1. Copiar archivos personalizados del repositorio al sistema
   - type: files
 
-  # 2. Configurar los repositorios de paquetes de RPM Fusion (para drivers y códecs multimedia)
+  # 2. Configurar los repositorios de paquetes de RPM Fusion (drivers y códecs)
   - type: rpm-fusion
 
-  # 3. Paquetes del sistema que se instalarán directamente en la imagen base (capa rpm-ostree)
- - type: default-flatpaks
+  # 3. Aplicaciones Flatpak por defecto instaladas en el sistema
+  - type: default-flatpaks
     system:
       # Navegador y Herramientas de Desarrollo
       - com.brave.Browser
@@ -32,12 +31,11 @@ modules:
       - org.duckstation.DuckStation           
       - net.pcsx2.PCSX2
       - org.ppsspp.PPSSPP
-  # 4. Paquetes nativos RPM esenciales que quieres que estén siempre disponibles en la terminal
-  - type: yafti
-    # (Opcional: un asistente visual para cuando el usuario inicie sesión por primera vez)
-  # Registrar tu script personalizado
+
+  # 4. Registrar tu script personalizado de la terminal
   - type: script
     snippets:
       - personalizar.sh
 
-  - type: signing # Firma digital de la imagen para instalaciones seguras
+  # 5. Firma digital de la imagen para instalaciones seguras
+  - type: signing
