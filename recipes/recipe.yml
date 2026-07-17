@@ -35,5 +35,9 @@ modules:
   # 4. Paquetes nativos RPM esenciales que quieres que estén siempre disponibles en la terminal
   - type: yafti
     # (Opcional: un asistente visual para cuando el usuario inicie sesión por primera vez)
+  # Registrar tu script personalizado
+  - type: script
+    snippets:
+      - personalizar.sh
 
   - type: signing # Firma digital de la imagen para instalaciones seguras
