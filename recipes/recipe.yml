@@ -6,31 +6,21 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 40
 
 modules:
-  # 1. Copiar archivos personalizados al sistema (opcional, dejamos estructura mínima)
-  - type: files
-
-  # 2. Aplicaciones Flatpak instaladas por defecto a nivel de sistema
-  - type: default-flatpaks
-    configurations:
-      - org.flatpak.default-profile
+  # 1. Instalar Flatpaks del sistema mediante el módulo nativo corregido
+  - type: flatpaks
     system:
-      # Navegador y Herramientas de Desarrollo
       - com.brave.Browser
       - com.visualstudio.code
       - org.godotengine.Godot
-
-      # Plataformas de Gaming y Launchers de PC
       - com.valvesoftware.Steam               
       - com.heroicgameslauncher.hgl
       - net.lutris.Lutris
       - org.prismlauncher.PrismLauncher       
-      
-      # Emulación y Herramientas Útiles
       - org.duckstation.DuckStation           
       - net.pcsx2.PCSX2
       - org.ppsspp.PPSSPP
 
-  # 3. Registrar tu script personalizado de la terminal
+  # 2. Registrar tu script personalizado de la terminal
   - type: script
     snippets:
       - personalizar.sh
